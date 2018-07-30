@@ -1,0 +1,69 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+//element data function
+void LoadElementsData(string Symbol)
+{
+     //load data from .csv file
+     ifstream InputFile("C:\\Users\\Jason\\Desktop\\Chemistry Table\\Chemistry Table\\Periodic Table.txt");
+
+     //variable declaration
+     string AtomicNumber;
+     string ElementSymbol;
+     string AtomicWeight;
+     string ElementName;
+
+     //look at each row of "Element Symbol"
+     while (!InputFile.eof())  //not end of file condition
+     {
+          //assigning each value in the csv with variables
+          getline(InputFile, AtomicNumber, ',');
+          getline(InputFile, ElementSymbol, ',');
+          getline(InputFile, AtomicWeight, ',');
+          getline(InputFile, ElementName, '\n');
+          
+          //when symbol found, output
+          if (ElementSymbol == Symbol)
+          {
+               cout << endl;
+               cout << "Element Name: " << ElementName << endl;
+               cout << "Atomic Number: " << AtomicNumber << endl;
+               cout << "Atomic Weight: " << AtomicWeight << endl;
+               cout << endl;
+               break;
+          }
+     }
+     InputFile.close();
+}
+
+
+void main()
+{
+     string InputSymbol;
+     
+     cout << "Input the element's symbol for which you want information on: ";
+     cin >> InputSymbol;
+     
+     char wantMore;
+
+     //searching for element information
+     do
+     {
+          LoadElementsData(InputSymbol);
+          
+          //does user want another one?
+          cout << "Looking for another element? (Y/N): " << endl;
+          cin >> wantMore;
+          
+          //if so, enter next symbol
+          if (wantMore == 'y' || wantMore == 'Y')
+          {
+               cout << "Enter Symbol: ";
+               cin >> InputSymbol;
+          }
+     } 
+     while (wantMore == 'y' || wantMore == 'Y');
+}
